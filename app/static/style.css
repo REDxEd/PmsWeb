@@ -27,6 +27,15 @@ p.button{
     margin-top: 28px;
     background-color: #13645a;
     color: white;
+
+}
+.log{
+    position:static;
+    text-align: center;
+}
+.log.p{
+    text-align: left;
+    position:static;
 }
 footer.fixar-rodape{
     border-top: 1px solid #333;
