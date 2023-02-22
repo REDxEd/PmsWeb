@@ -1,0 +1,171 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends "layout.html" %}
+
+
+{% block content %}
+    
+    <div class="jumbotron">
+        
+        <h1>Solicitação</h1>
+
+        <form id="pedido" method="post" action="{{url_for('solicitar')}}">
+            {{ form_pedido.hidden_tag() }}
+            {{ wtf.form_errors(form_pedido, hiddens="only") }}
+            
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    {{ wtf.form_field(form_pedido.solicitante) }}</div>
+                <div class="col-md-3">
+                    {{ wtf.form_field(form_pedido.setor) }}</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    {{ wtf.form_field(form_pedido.justificativa) }}</div>
+                <div class="col-md-4">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ wtf.form_field(form_pedido.tipo) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ wtf.form_field(form_pedido.prioridade) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    
+                    <table class="table table-striped table-bordered">
+                        <thead>
+
+                            <form id="item" method="post" action="{{url_for('add_item',pedido_id=pedido_id)}}">
+                                {{ form_item.hidden_tag() }}
+                                <tr>
+                                    <div class="row justify-content-md-center">
+
+                                        <th></th>
+                                        <th class="col-md-6">{{ wtf.form_field(form_item.descricao_item) }}</th>
+                                        <th class="col-md-1">{{ wtf.form_field(form_item.quantidade) }}</th>
+                                        <th class="col-md-2">
+                                            <label class="control-label" for="valor_unitario">Preço aprox. (unidade)</label>
+                                            <div class="input-group  mb-2   ">
+                                                <span class="input-group-text" style="margin-bottom: 9px;">R$</span>
+                                                <input class="form-control" id="valor_unitario" name="valor_unitario" required="" type="text" style="text-align: right; margin-bottom: 9px;" onKeyUp="mascaraMoeda(this, event)" value="" placeholder="0,00">
+                                                
+                                                </div>
+                                        </th>
+                                        <th class="col-md-4">{{ wtf.form_field(form_item.observacao) }}</th>
+                                        <th><button type="button" onclick="add()" class="btn btn-primary" form ="item" style="margin-bottom: 16px;">Add</button></th>
+
+                                    </div>    
+                                </tr>   
+                            </form>           
+                        </thead>
+                        <tbody id="lista">
+                        
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+        <form>
+            <div class="row justify-content-md-center">
+            <button type="button" onclick="enviar_pedido()" class="btn btn-success">Enviar Pedido</button>
+            </div>
+        </form>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous">
+    </script>
+    
+    <script>
+        let dex = 0;
+        function add(){
+            console.log('testing')
+            
+            let descricao = document.getElementById('descricao_item').value;
+            let quantidade = document.getElementById('quantidade').value;
+            let valor_unitario = document.getElementById('valor_unitario').value;
+            let observacao = document.getElementById('observacao').value;
+
+            if (descricao&&quantidade&&valor_unitario !=""){
+                dex +=1;
+                let lista = document.getElementById('lista').innerHTML;
+                
+
+                lista +=  `<tr>
+                                <th scope="row">`+dex+`</th>
+                                <td width="30">`+descricao+`</td>
+                                <td style="text-align: rigth;">`+quantidade+`</td>
+                                <td style="text-align: rigth;">R$ `+valor_unitario+`</td>
+                                <td>`+observacao+`</td>
+                                <td><input class="btn btn-danger" value="excluir" style="margin-bottom: 16px; width: 70px;"/></td>
+                            </tr>`
+
+                document.getElementById('lista').innerHTML = lista;
+                var form = document.getElementById('item');
+                
+                form.submit();
+                form.reset();
+                
+            }    
+        }
+        function enviar_pedido(){
+
+            let solicitante = document.getElementById('solicitante').value;
+            let setor = document.getElementById('setor').value;
+            let justificativa = document.getElementById('justificativa').value;
+
+            if (solicitante&&setor&&justificativa !=""){
+                var form_pedido = document.getElementById('pedido');
+                form_pedido.submit();
+            }else{
+                alert('Os campos solicitante, setor e justificativa são obrigatórios!')
+            }
+        }
+        String.prototype.reverse = function(){
+            return this.split('').reverse().join('');
+        };
+
+        function mascaraMoeda(campo,evento){
+            var tecla = (!evento) ? window.event.keyCode : evento.which;
+            var valor  =  campo.value.replace(/[^\d]+/gi,'').reverse();
+            var resultado  = "";
+            var mascara = "##.###.###,##".reverse();
+            for (var x=0, y=0; x<mascara.length && y<valor.length;) {
+                if (mascara.charAt(x) != '#') {
+                    resultado += mascara.charAt(x);
+                    x++;
+                }else {
+                    resultado += valor.charAt(y);
+                    y++;
+                    x++;
+                }
+            }
+            campo.value = resultado.reverse();
+        }   
+    </script>
+
+
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block content %}
+    <div class="jumbotron">
+        <br>
+        <h1>Adicionar Itens</h1>
+
+        <form class="form form-horizontal" method="post" role="form">
+            {{ form_item.hidden_tag() }}
+            {{ wtf.form_errors(form_item, hiddens="only") }}
+            
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    {{ wtf.form_field(form_item.descricao) }}</div>
+                <div class="col-md-3">
+                    {{ wtf.form_field(form_item.quantidade) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    {{ wtf.form_field(form_item.valor) }}</div>
+            </div>
+            <div class="row justify-content-md-center">
+                <button type="submit" class="btn btn-secondary">Acrescentar itens</button>
+            </div>
+
+        </form>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+ 
+  <script type="text/javascript">
+    $(document).on('submit','#todo-form',function(e)
+                   {
+      console.log('hello');
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'/solicitar',
+        data:{
+          todo:$("#todo").val()
+        },
+        success:function()
+        {
+          alert('saved');
+        }
+      })
+    });
+  </script>
+
+
+{% endblock %}

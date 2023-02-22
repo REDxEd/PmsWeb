@@ -1,4 +1,31 @@
+{% import 'bootstrap/wtf.html' as wtf %}
 {% extends "layout.html" %}
+
+
 {% block content %}
-    <h1>Link não criado!</h1>
+<form id="item" method= 'POST' action= '{{url_for("add_item")}}'>
+    <div class="form-group row">
+        <label for="descricao" class="col-sm-2 col-form-label">Descrição</label>
+        <input type="text" name="descricao">
+        <input type="submit" form="item">
+</form>
+
+<script>
+        $("item").submit(function(e) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var form = $(this);
+        var actionUrl = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                alert(data); // show response from the php script.
+            }
+        });
+    });
+</script>
 {% endblock %}
