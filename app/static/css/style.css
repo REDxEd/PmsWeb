@@ -64,6 +64,11 @@ td {
     white-space: nowrap;
   }
 
+.table{
+    border-radius: 10px ;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.233);
+}
+
 .color1{
     background-color:#07f9a2 ;
     background-color: #09c184;

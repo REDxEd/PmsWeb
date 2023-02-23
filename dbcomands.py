@@ -9,6 +9,11 @@ app.app_context().push()
 # db.session.add(u)
 # db.session.commit()
 
-users = User.query.all()
-for u in users:
-    print (u.id, u.username, u.nip)
+pedidos = list(Pedido.query.filter(Pedido.solicitante!=None))
+
+
+
+
+print(type(pedidos))
+for p in pedidos:
+    print(p.id, p.solicitante, p.setor)

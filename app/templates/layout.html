@@ -15,66 +15,67 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-{% block navbar %}
-<div class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="{{ url_for('index') }}"><img src="../static/img/icons/logo.png"  style="height: 80px; width: 80px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+    {% block navbar %}
+        <div class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="{{ url_for('index') }}"><img src="../static/img/icons/logo.png"  style="height: 80px; width: 80px;"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('test')}}">test <span class="sr-only">(current)</span></a>
+                </li>
 
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="{{url_for('test')}}">test <span class="sr-only">(current)</span></a>
-        </li>
-        
-        {% if current_user.super_user %}
-
-            <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('register') }}">Cadastrar user</a>
-            </li>                    
-        {% endif %}
-        <li class="navbar-toggler">
-            <a class="nav-link dropdown-toggle" href="{{ url_for('test') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-    </ul>
-    {% if current_user.is_anonymous %}
-        
-        <a href="{{ url_for('login') }}">
-            <button class="btn btn-outline-success my-2 my-sm-0" id="login-button" >Login</button>
-        </a>
+                {% if current_user.super_user %}
             
-    {% else %}
-        <button class="btn btn-outline-danger my-2 my-sm-0" id="login-button" style="color: red;"><a href="{{ url_for('logout') }}">Logout</a></button>
-    {% endif %}
-</div>
-{% endblock %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ url_for('register') }}">Cadastrar user</a>
+                    </li>                    
+                {% endif %}
+                <li class="navbar-toggler">
+                    <a class="nav-link dropdown-toggle" href="{{ url_for('test') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            {% if current_user.is_anonymous %}
+
+                <a href="{{ url_for('login') }}">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="login-button" >Login</button>
+                </a>
+
+            {% else %}
+                <button class="btn btn-outline-danger my-2 my-sm-0" id="login-button" style="color: red;"><a href="{{ url_for('logout') }}">Logout</a></button>
+            {% endif %}
+        </div>
+    {% endblock %}
 
 
 
     <br><br><br><br>
 
-<!-- bloco com conteudo especifico de cada pagina -->
-{% block content %}
+    <!-- #####bloco com conteudo especifico de cada pagina###### -->
+    {% block content %}
 
-{% endblock %}
+    {% endblock %}
 
-{% block footer %}        
-    <footer class="mt-auto">
-        <div class="container" style="text-align: center;">
-
-            <a href="https://github.com/REDxEd"><img src="../static/img/icons/github.svg" alt="github" width="30" height="30" target="_blank"></a>     
-            <a href="https://www.linkedin.com/in/edson-g-machado-39b3b470/" target="_blank"><img src="../static/img/icons/linkedin.svg" alt=""width="30" height="30"></a>
-            <p>Tel: (21) 3386-<b>4443</b> <br> Email: gomes.machado@marinha.mil.com</p>    
-        </div>
-    </footer>
-{% endblock %}
+    {% block footer %}        
+        <footer class="mt-auto">
+            <div class="container" style="text-align: center;">
+            
+                <a href="https://github.com/REDxEd"><img src="../static/img/icons/github.svg" alt="github" width="30" height="30" target="_blank"></a>     
+                <a href="https://www.linkedin.com/in/edson-g-machado-39b3b470/" target="_blank"><img src="../static/img/icons/linkedin.svg" alt=""width="30" height="30"></a>
+                <p>Tel: (21) 3386-<b>4443</b> <br> Email: gomes.machado@marinha.mil.com</p>    
+            </div>
+        </footer>
+    {% endblock %}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>

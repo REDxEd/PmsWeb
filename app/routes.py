@@ -40,7 +40,6 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/solicitar', methods=['GET', 'POST',])
-
 def solicitar():
 
 
@@ -94,6 +93,19 @@ def add_item():
         return('',204)
 
 
+@app.route('/acompanhar')
+def acompanhar():
+    
+    
+    pedidos = list(Pedido.query.filter(Pedido.solicitante!=None))
+
+    return render_template('acompanhar.html',pedidos=pedidos)
+
+@app.route('/pedido')
+def pedido():
+
+    return render_template('pedido.html')
+
 #===========================================================================================================
 
 
@@ -104,9 +116,6 @@ def test():
 
     return render_template('test.html')
 
-@app.route('/acompanhar')
-def acompanhar():
-    return render_template('acompanhar.html')
 
 @app.route('/editar')
 @login_required

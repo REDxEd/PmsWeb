@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col">
+                <h1>Acompanhar</h1>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar pedido" onkeyup="search()">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" disabled type="button"><img src="../static/img/icons/search.svg"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+            <p>Selecione o pedido ou use a barra de pesquisa.</p>
+        <br><br>
+        <div class="container col-md-11" id="table-tela">
+            <table class="table table-hover table-light">
+                <thead style="background-color: darkgrey;">
+                  <tr>
+                    <div class="row justify-content-md-center">
+                        <th scope="col" class="col-md-1">Nº</th>
+                        <th scope="col" class="col-md-5">Descrição</th>
+                        <th scope="col" class="col-md-2">Solicitante</th>
+                        <th scope="col" class="col-md-2">Status</th>
+                    </div>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for p in pedidos %}
+                        <tr id="linhas" onclick="link('{{p.id}}')" >
+                            <th scope="row">{{ p.id }}</th>
+                            <td>{{ p.descricao_pedido }}</td>
+                            <td>{{ p.solicitante }}</td>
+                            <td>{{ p.estado }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+    <script>
+        function link(id){
+            
+            window.location.href = "pedido?id="+id;
+        }
+        function search(){
+            var input = document.querySelector("input").value;
+            input = input.toLowerCase();
+            var linhas = document.querySelectorAll("#linhas");
+            for (var i = 0; i < linhas.length; i++){
+                linha = linhas[i].textContent;
+                linha = linha.toLowerCase();
+                if (linha.includes(input)){
+                    linhas[i].style.display = "table-row";
+                }else{
+                              
+                    linhas[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+{% endblock %}
