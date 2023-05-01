@@ -42,50 +42,55 @@ def logout():
 @app.route('/solicitar', methods=['GET', 'POST',])
 def solicitar():
 
-
+    
     form_pedido=PedidoForm()
     form_item= ItemForm()
     
     pedido = Pedido()
-    db.session.add(pedido)
-    db.session.commit()
+    
+    if request.method=='GET':
 
-    pedido_id = pedido.id
+        db.session.add(pedido)
+        db.session.commit()
+
+        pedido_id = pedido.id
+
 
     if request.method=='POST':
         
-        print ('validate_ON!')
-        pedido=Pedido(
-            descricao_pedido = request.form.get('descricao_pedido'),
-            tipo = request.form.get('tipo'),
-            setor = request.form.get('setor'),
-            solicitante = request.form.get('solicitante'),
-            justificativa = request.form.get('justificativa'),
-            prioridade = request.form.get('prioridade'),
-            validate = True
-        )
+        pedido = Pedido.query.get(int(request.args.get('pedido_id')))
+        pedido.descricao_pedido = request.form.get('descricao_pedido')
+        pedido.tipo = request.form.get('tipo')
+        pedido.setor = request.form.get('setor')
+        pedido.solicitante = request.form.get('solicitante')
+        pedido.justificativa = request.form.get('justificativa')
+        pedido.prioridade = request.form.get('prioridade')
+        pedido.validate = True
+
         db.session.add(pedido)
         db.session.commit()
+
+
         return redirect(url_for('index'))
-
-
-
+    
     return render_template('solicitar.html',form_pedido=form_pedido,form_item=form_item, pedido_id=pedido_id)
 
 
 
-@app.route('/add_item', methods=['POST', 'GET'])
+@app.route('/add_item', methods=['POST'])
 def add_item():
     print('IN ADD_ITEM')
     if request.method=='POST':
+        
         item = Item(
-            pedido_id = request.args.get('pedido_id'),
+            pedido_id = int(request.args.get('pedido_id')),
             descricao_item =request.form.get('descricao_item'),
             quantidade = float(request.form.get('quantidade')),
             valor_unitario = float(str(request.form.get('valor_unitario').replace(',','.'))),
-        )
+            observacao = request.form.get('observacao'))
+        
         db.session.add(item)
-
+        db.session.commit()
         print('pedido_id = {}'.format(item.pedido_id))
         print('descricao_item = {}'.format(item.descricao_item))
         print('quantidade = {}'.format(item.quantidade))
@@ -103,8 +108,21 @@ def acompanhar():
 
 @app.route('/pedido')
 def pedido():
-
-    return render_template('pedido.html')
+    
+    id = request.args.get('id')
+    pedido = Pedido.query.filter_by(id=id).first()
+    
+    itens = Item.query.filter_by(pedido_id=id).all()
+    
+    print(type(itens))
+    for i in itens:
+        print(i.id)
+        print(i.descricao_item)
+        print(i)
+        print(i)
+        print(i)
+        print(i)
+    return render_template('pedido.html',pedido=pedido, itens=itens)
 
 #===========================================================================================================
 

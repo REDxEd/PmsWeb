@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col">
-                <h1>Acompanhar</h1>
+                <h1 class="display-4">Acompanhar</h1>
             </div>
             <div class="col-md-4">
                 <div class="input-group">
@@ -16,7 +16,7 @@
             </div>
 
         </div>
-            <p>Selecione o pedido ou use a barra de pesquisa.</p>
+            <p class="lead">Selecione o pedido ou use a barra de pesquisa.</p>
         <br><br>
         <div class="container col-md-11" id="table-tela">
             <table class="table table-hover table-light">
@@ -26,6 +26,8 @@
                         <th scope="col" class="col-md-1">Nº</th>
                         <th scope="col" class="col-md-5">Descrição</th>
                         <th scope="col" class="col-md-2">Solicitante</th>
+                        <th scope="col" class="col-md-1">setor</th>
+                        <th scope="col">Valor do pedido</th>
                         <th scope="col" class="col-md-2">Status</th>
                     </div>
                   </tr>
@@ -36,6 +38,8 @@
                             <th scope="row">{{ p.id }}</th>
                             <td>{{ p.descricao_pedido }}</td>
                             <td>{{ p.solicitante }}</td>
+                            <td>{{ p.setor }}</td>
+                            <td></td>
                             <td>{{ p.estado }}</td>
                         </tr>
                     {% endfor %}

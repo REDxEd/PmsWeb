@@ -7,13 +7,19 @@ from app.models import *
 app.app_context().push()
 # u = User(username='Gomes', nip='11051957', super_user=1)
 # db.session.add(u)
-# db.session.commit()
-
-pedidos = list(Pedido.query.filter(Pedido.solicitante!=None))
 
 
 
+pedidos = Pedido.query.all()
+itens = Item.query.all()
 
-print(type(pedidos))
+for i in itens:
+    db.session.delete(i)
+    
 for p in pedidos:
-    print(p.id, p.solicitante, p.setor)
+    db.session.delete(p)
+
+
+db.session.commit()
+
+

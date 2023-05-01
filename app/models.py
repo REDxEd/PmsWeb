@@ -1,10 +1,10 @@
 # toda a estrutura do DATABASE deve ser implementado aqui
-# sempre que alguma modificação for feita aqui, os comandos abaixo precisam ser realizados para atualizar o bd:
-#*********************{[(   flask db migrate -m "{commit}"   )]}*********************
-#*********************{[(          flask db upgrade          )]}*********************
+# sempre que alguma modificação for feita aqui, os comandos abaixo precisam ser realizados para atualizar o db:
+#*********************{[(   $ flask db migrate -m "{commit}"   )]}*********************
+#*********************{[(          $ flask db upgrade          )]}*********************
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db # $  flask db init
+from app import db #  $ flask db init
 from flask_login import UserMixin
 from app import login
 

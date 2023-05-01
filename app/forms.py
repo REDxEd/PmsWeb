@@ -38,10 +38,10 @@ class ItemForm(FlaskForm):
     submit = SubmitField('Add')
 
 class PedidoForm(FlaskForm):
-    descricao_pedido = StringField('Descrição', validators=[DataRequired()], render_kw={"Ex. Material para reforma do alojamento da 2ªCIA"})
+    descricao_pedido = StringField('Descrição', validators=[DataRequired()], render_kw={"placeholder":"Ex. Material de conforto para o dormitório da 2ªCIA"})
     tipo = SelectField('Tipo de pedido',validators=[DataRequired()],choices=['MATERIAL','SERVIÇO'])
     setor = StringField('Setor/Incubência', validators=[DataRequired()], render_kw={"placeholder": "Ex. 2ªCiaFuzNav"})
     solicitante = StringField('Solicitante', validators=[DataRequired()],render_kw={"placeholder": "Ex. 3ºSG-FN-QQ INFANTSON"})
-    justificativa = TextAreaField('Justificativa', validators=[DataRequired()], render_kw={"placeholder": "Texto sucinto explicando a necessidade do pedido", 'rows':'6'})
+    justificativa = TextAreaField('Justificativa', validators=[DataRequired()], render_kw={"placeholder": "Texto sucinto explicando o \"por que\" do pedido", 'rows':'6'})
     prioridade = SelectField('Prioridade', validators=[DataRequired()],choices=['MELHORIA','CONFORTO','EMERGÊNCIAL','OPORTUNIDADE'])
     submit = SubmitField('Enviar')

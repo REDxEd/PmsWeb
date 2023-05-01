@@ -1,0 +1,56 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends "layout.html" %}
+
+
+{% block content %}
+    
+    <div class="jumbotron">
+        
+        <h2>Pedido nº {{pedido.id}}</h2>
+
+        <div class="container" id="pedido">
+                     
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    {{ pedido.solicitante }}</div>
+                <div class="col-md-3">
+                    {{ pedido.setor }}</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    {{ pedido.justificativa }}</div>
+                <div class="col-md-4">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ pedido.tipo }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ pedido.prioridade }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    
+                    <table class="table table-striped table-bordered">
+                        <thead>
+
+                        </thead>
+                        <tbody id="lista">
+                        
+                        </tbody>
+                    </table>
+                </div>                
+            </div>
+    </div>
+{% endblock %}

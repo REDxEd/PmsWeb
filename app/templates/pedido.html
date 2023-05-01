@@ -1,4 +1,116 @@
+{% import 'bootstrap/wtf.html' as wtf %}
 {% extends "layout.html" %}
+
+
 {% block content %}
-    <h1>pedido</h1>
+
+<div class="jumbotron">
+
+    <h1 class="display-4">Pedido {{pedido.id}}</h1>
+    <p class="lead">{{pedido.estado}}</p>
+
+    <!-- ******form****** -->
+    <form id="pedido" method="post" action="/solicitar">
+
+        <!-- ******row****** -->
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-5">
+                <div class="form-group  required"><label class="control-label" for="descricao_pedido">Descrição</label>
+
+                    <input class="form-control" id="descricao_pedido" name="descricao_pedido"
+                        value="{{pedido.descricao_pedido}}" disabled=“true” required="" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group  required"><label class="control-label" for="setor">Setor/Incubência</label>
+                    <input class="form-control" id="setor" name="setor" value="{{pedido.setor}}" disabled=“true”
+                        required="" type="text">
+                </div>
+            </div>
+        </div>
+
+        <!-- ******row****** -->
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-4">
+                <div class="form-group  required"><label class="control-label" for="solicitante">Solicitante</label>
+                    <input class="form-control" id="solicitante" name="solicitante"
+                        value="{{pedido.solicitante}}" disabled=“true” required="" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group  required"><label class="control-label" for="tipo">Tipo de pedido</label>
+                    <input class="form-control" id="tipo" name="tipo" value="{{pedido.tipo}}" disabled=“true” required="" type="text">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group  required"><label class="control-label" for="prioridade">Prioridade</label>
+                    <input class="form-control" id="prioridade" name="prioridade" required="" value="{{pedido.prioridade}}" disabled=“true” required="" type="text">
+                </div>
+            </div>
+        </div>
+
+        <!-- ******row****** -->
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <div class="form-group  required"><label class="control-label" for="justificativa">Justificativa</label>
+                    <textarea class="form-control" id="justificativa" name="justificativa"
+                        required="" disabled rows="6" style="background-color: white;">{{pedido.justificativa}}</textarea>
+                    <!-- adicionei o estilo diretamente aqui pq não consegui fazer funcionar pela folha de estilo :( -->
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- **********************itens_table************************* -->
+    <!-- ******table****** --->
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            
+            <table class="table table-striped table-light">
+                <thead>
+                    <tr>
+                        <div class="row justify-content-md-center">
+                            <th class="col-md-1">Nº</th>
+                            <th class="col-md-6">Descricao</th>
+                            <th class="col-md-1">quantidade</th>
+                            <th class="col-md-2">preço aprox</th>
+                            <th class="col-md-4">Observação</th>
+                        </div>    
+                    </tr>              
+                </thead>
+                <tbody>
+                    {% for i in itens %}
+                    <tr>
+                        <div class="row justify-content-md-center">
+                            <td class="col-md-1">{{i.id}}</td>
+                            <td class="col-md-6">{{i.descricao_item}}</td>
+                            <td class="col-md-1">{{i.quantidade}}</td>
+                            <td class="col-md-2">{{i.preco_aprox}}</td>
+                            <td class="col-md-4">{{i.observacao}}</td>
+                        </div>
+                    
+                    {% endfor %}
+                    <!-- Requisito: acrescentar valor total do pedido -->
+                </tbody>
+            </table>
+        </div>                
+    </div>
+    <form>
+    <div class="row justify-content-md-center">
+    </div>
+    </form>
+    
+
+
+</div>
 {% endblock %}

@@ -6,46 +6,43 @@
     
     <div class="jumbotron">
         
-        <h1>Solicitação</h1>
+        <h1 class="display-4">Solicitação</h1>
 
-        <form id="pedido" method="post" action="{{url_for('solicitar')}}">
+        <form id="pedido" method="post" action="{{url_for('solicitar',pedido_id=pedido_id)}}">
             {{ form_pedido.hidden_tag() }}
             {{ wtf.form_errors(form_pedido, hiddens="only") }}
-            
             
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
-                    {{ wtf.form_field(form_pedido.solicitante) }}</div>
-                <div class="col-md-3">
-                    {{ wtf.form_field(form_pedido.setor) }}</div>
+                    {{ wtf.form_field(form_pedido.descricao_pedido) }}</div>
+                    <div class="col-md-3">
+                        {{ wtf.form_field(form_pedido.setor) }}</div>
             </div>
-            
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="col-md-6">
-                    {{ wtf.form_field(form_pedido.justificativa) }}</div>
                 <div class="col-md-4">
-                    <br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ wtf.form_field(form_pedido.tipo) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            {{ wtf.form_field(form_pedido.prioridade) }}
-                        </div>
-                    </div>
+                    {{ wtf.form_field(form_pedido.solicitante) }}</div>
+                <div class="col-md-2">
+                    {{ wtf.form_field(form_pedido.tipo) }}
+                </div>
+                <div class="col-md-2">
+                    {{ wtf.form_field(form_pedido.prioridade) }}
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    {{ wtf.form_field(form_pedido.justificativa) }}</div>
+                </div>
+
             
         </form>
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-11">
                     
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-light">
                         <thead>
 
                             <form id="item" method="post" action="{{url_for('add_item',pedido_id=pedido_id)}}">
@@ -135,8 +132,9 @@
             let solicitante = document.getElementById('solicitante').value;
             let setor = document.getElementById('setor').value;
             let justificativa = document.getElementById('justificativa').value;
+            let descricao_pedido =document.getElementById('descricao_pedido').value;
 
-            if (solicitante&&setor&&justificativa !=""){
+            if (solicitante&&setor&&justificativa&&descricao_pedido !=""){
                 var form_pedido = document.getElementById('pedido');
                 form_pedido.submit();
             }else{
